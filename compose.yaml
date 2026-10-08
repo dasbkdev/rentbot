@@ -1,0 +1,20 @@
+name: rentbot
+
+services:
+  bot:
+    build: .
+    env_file: .env
+    environment:
+      DB_PATH: /app/data/rentbot.sqlite3
+    volumes:
+      - bot-data:/app/data
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  bot-data:
